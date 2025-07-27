@@ -18,6 +18,67 @@ export class PDFProcessor {
   private getMockContent(filename: string): string {
     // Mock content for different document types
     const mockContents: Record<string, string> = {
+      // Adobe Acrobat learning materials for HR forms
+      'Learn Acrobat - Fill and Sign.pdf': `
+        Creating and Managing Fillable Forms in Adobe Acrobat
+        
+        Form Field Types and Setup
+        Adobe Acrobat provides comprehensive tools for creating interactive forms essential for HR processes. Text fields allow employees to enter personal information, contact details, and responses to open-ended questions. Dropdown menus streamline data entry by providing predefined options for departments, job titles, and employment classifications.
+        
+        Checkbox Implementation
+        Checkboxes are crucial for HR forms, enabling employees to select multiple options for benefits enrollment, policy acknowledgments, and compliance certifications. Radio buttons work well for single-choice selections like employment status or preferred communication methods.
+        
+        Form Validation and Security
+        Implement field validation to ensure data accuracy and completeness. Required fields prevent form submission without critical information, while format validation ensures proper entry of phone numbers, email addresses, and identification numbers.
+      `,
+      'Learn Acrobat - Create and Convert_1.pdf': `
+        Document Creation and Form Setup for HR Professionals
+        
+        Template Development
+        Start with professional templates designed for HR documentation. Employment applications, performance review forms, and policy acknowledgment documents require consistent formatting and branding. Customize templates with company logos, color schemes, and specific field requirements.
+        
+        Conversion Capabilities
+        Convert existing Word documents and Excel spreadsheets into interactive PDF forms while maintaining formatting integrity. This process preserves complex layouts, tables, and formatting elements essential for professional HR documentation.
+        
+        Version Control Systems
+        Establish clear naming conventions and version control for HR forms. Track changes, updates, and revisions to ensure compliance with current regulations and company policies.
+      `,
+      'Learn Acrobat - Request e-signatures_1.pdf': `
+        Electronic Signature Workflows for HR Compliance
+        
+        Signature Field Configuration
+        Set up signature fields in strategic locations on employment contracts, offer letters, and policy acknowledgments. Configure multiple signature fields for different parties including employees, managers, and HR representatives.
+        
+        Workflow Automation
+        Establish signature routing and approval processes for complex HR documentation. Automated reminders ensure timely completion of signature processes, maintaining momentum in onboarding and compliance workflows.
+        
+        Legal Compliance Features
+        Electronic signatures must meet legal requirements for employment documentation. Implement audit trails that track signature timestamps, IP addresses, and authentication methods for comprehensive compliance records.
+      `,
+      'Learn Acrobat - Share_1.pdf': `
+        Form Distribution and Sharing Strategies
+        
+        Secure Distribution Methods
+        Create secure sharing links for sensitive HR documents with password protection and access controls. Role-based permissions ensure appropriate access levels for different types of HR documentation.
+        
+        Collaboration Features
+        Enable real-time collaboration on forms requiring input from multiple departments. Set up review and approval workflows for form updates and establish shared workspaces for HR team collaboration.
+        
+        Access Management
+        Implement time-limited access for temporary forms like exit interviews and performance reviews. Monitor form access and completion rates to optimize HR processes and identify bottlenecks.
+      `,
+      'Learn Acrobat - Export_1.pdf': `
+        Data Export and Management for HR Analytics
+        
+        Export Format Options
+        Export form data to Excel spreadsheets for comprehensive analysis and reporting. Generate CSV files for seamless integration with HR information systems and payroll platforms.
+        
+        Data Processing Capabilities
+        Aggregate responses from multiple forms to identify trends and patterns in employee data. Filter and sort information based on specific criteria like department, hire date, or performance metrics.
+        
+        Automation and Integration
+        Set up scheduled exports for regular reporting requirements and create automated data feeds to payroll and benefits systems. Establish robust backup procedures for critical HR data preservation.
+      `,
       'South of France - Cities.pdf': `
         Comprehensive Guide to Major Cities in the South of France
         
