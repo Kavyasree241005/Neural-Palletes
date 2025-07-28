@@ -1,0 +1,9 @@
+# Core dependencies for PDF processing and text analysis
+PyPDF2==3.0.1
+nltk==3.8.1
+scikit-learn==1.3.2
+numpy==1.24.3
+sentence-transformers==2.2.2
+transformers==4.35.2
+torch==2.1.1+cpu
+pandas==2.0.3

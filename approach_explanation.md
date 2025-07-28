@@ -2,65 +2,58 @@
 
 ## Overview
 
-Our Document Intelligence System implements a persona-driven approach to document analysis that extracts and prioritizes the most relevant content sections based on specific user roles and their job-to-be-done. The system is designed to handle diverse document types, personas, and tasks while maintaining CPU-only processing constraints.
+Our Document Intelligence System implements a CPU-only, offline solution for extracting and prioritizing relevant content from PDF document collections based on specific personas and their job-to-be-done. The system is designed to run efficiently within the constraints of ≤1GB model size and ≤60 seconds processing time.
 
 ## Methodology
 
-### 1. Document Processing Pipeline
+### 1. PDF Processing Pipeline
 
-The system follows a multi-stage processing pipeline:
+The system employs a multi-stage approach to document processing:
 
-**Text Extraction**: Uses lightweight PDF parsing to extract raw text content from uploaded documents. In production, this would utilize libraries like pdf-parse or similar tools that can run efficiently on CPU-only environments.
+**Text Extraction**: Uses PyPDF2 for reliable PDF text extraction, organizing content by page numbers to maintain document structure and enable precise section referencing.
 
-**Section Identification**: Employs rule-based pattern matching combined with heuristic analysis to identify document sections, headings, and content boundaries. This approach ensures reliable performance without requiring large language models.
+**Section Identification**: Implements heuristic-based section detection using pattern matching for headers, titles, and structural elements. This approach identifies logical content boundaries without requiring large language models.
 
-**Content Segmentation**: Breaks down documents into logical sections that can be independently analyzed and ranked based on their relevance to the specified persona and task.
+**Content Segmentation**: Breaks documents into semantically meaningful sections that can be independently analyzed and ranked based on relevance criteria.
 
-### 2. Persona-Driven Analysis
+### 2. Persona-Driven Content Analysis
 
-The core innovation lies in the persona-driven analysis engine:
+The core innovation lies in the persona-driven relevance scoring:
 
-**Role Mapping**: Maps user-defined personas (Travel Planner, Researcher, Analyst, etc.) to relevant content categories and importance weights. Each persona has associated keywords, priorities, and content preferences.
+**Semantic Similarity**: Utilizes the lightweight all-MiniLM-L6-v2 sentence transformer model (80MB) for semantic understanding between content sections and the persona+task combination.
 
-**Task Alignment**: Analyzes the job-to-be-done description to identify key objectives, constraints, and success criteria. This influences how content is filtered and prioritized.
+**Fallback Mechanism**: Implements TF-IDF vectorization as a backup when semantic models are unavailable, ensuring robust operation across different environments.
 
-**Contextual Scoring**: Implements a scoring algorithm that considers both persona relevance and task alignment to rank document sections by importance.
+**Multi-factor Scoring**: Combines semantic similarity with content quality indicators like section length, structural importance, and keyword density.
 
-### 3. Intelligent Ranking System
+### 3. Intelligent Ranking and Refinement
 
-The ranking system uses a multi-factor approach:
+The ranking system prioritizes content through:
 
-**Relevance Scoring**: Evaluates content relevance based on keyword matching, semantic similarity, and contextual indicators specific to the persona and task.
+**Relevance Scoring**: Calculates cosine similarity between section embeddings and persona+task embeddings to identify the most pertinent content.
 
-**Priority Weighting**: Applies persona-specific weights to different content types. For example, a Travel Planner working on group trip planning would prioritize accommodation and activity information over historical context.
+**Content Refinement**: Applies extractive summarization techniques using sentence scoring based on word frequency and importance to generate concise, actionable insights.
 
-**Content Quality Assessment**: Considers factors like information density, actionability, and completeness to ensure high-quality content surfaces first.
+**Quality Filtering**: Ensures extracted sections meet minimum quality thresholds for word count, coherence, and information density.
 
 ### 4. Optimization for Constraints
 
-The system is specifically designed to meet challenge constraints:
+The system is specifically optimized for the challenge requirements:
 
-**CPU-Only Processing**: Uses efficient algorithms and lightweight models that don't require GPU acceleration. Rule-based approaches combined with optimized text processing ensure fast execution.
+**CPU-Only Processing**: Uses efficient algorithms and lightweight models that operate without GPU acceleration, with automatic fallback mechanisms.
 
-**Memory Efficiency**: Implements streaming processing and memory-conscious data structures to handle multiple documents without exceeding memory limits.
+**Memory Efficiency**: Implements streaming processing and memory-conscious data structures to handle multiple documents within memory constraints.
 
-**Performance Optimization**: Targets sub-60-second processing time through parallel processing, caching, and algorithmic optimizations.
+**Performance Optimization**: Targets sub-60-second processing through parallel text extraction, optimized similarity calculations, and efficient data structures.
+
+**Offline Operation**: All models and dependencies are pre-downloaded and cached, enabling complete offline functionality without internet access.
 
 ## Technical Implementation
 
-The system is built using modern web technologies with a focus on maintainability and extensibility:
+The modular architecture separates concerns for maintainability and extensibility:
 
-- **Frontend**: React-based interface with TypeScript for type safety and better developer experience
-- **Processing Engine**: Modular architecture with separate components for PDF processing, text analysis, and ranking
-- **Output Format**: Generates structured JSON output matching the specified schema with metadata, extracted sections, and detailed subsection analysis
+- **PDFProcessor**: Handles text extraction and section identification
+- **ContentAnalyzer**: Manages relevance scoring and text refinement  
+- **DocumentIntelligenceSystem**: Orchestrates the complete processing pipeline
 
-## Future Enhancements
-
-The current implementation provides a solid foundation for more advanced features:
-
-- Integration with lightweight transformer models for improved semantic understanding
-- Dynamic persona learning from user feedback
-- Support for additional document formats beyond PDF
-- Enhanced multilingual processing capabilities
-
-This approach balances sophistication with practicality, ensuring reliable performance across diverse use cases while maintaining the flexibility to adapt to new personas and document types.
+This approach balances sophistication with practicality, ensuring reliable performance across diverse document types and use cases while maintaining the flexibility to adapt to new personas and domains.
