@@ -12,6 +12,23 @@ A CPU-only, offline document analysis system that extracts and prioritizes relev
 
 ## Quick Start
 
+### File Structure Setup
+
+Create the following directory structure:
+
+```
+project/
+├── input/
+│   └── input.json          # Your JSON input file goes here
+├── pdfs/
+│   ├── document1.pdf       # Your PDF files go here
+│   ├── document2.pdf
+│   └── ...
+├── output/
+│   └── output.json         # Results will be generated here
+└── (other project files)
+```
+
 ### Using Docker (Recommended)
 
 1. **Build the Docker image:**
@@ -19,11 +36,16 @@ A CPU-only, offline document analysis system that extracts and prioritizes relev
 docker build -t document-intelligence .
 ```
 
-2. **Prepare your files:**
+2. **Create directories and add your files:**
 ```bash
+# Create the required directories
 mkdir -p input pdfs output
-# Place your input.json in the input/ directory
-# Place your PDF files in the pdfs/ directory
+
+# Place your JSON input file here:
+cp your_input.json input/input.json
+
+# Place your PDF files here:
+cp *.pdf pdfs/
 ```
 
 3. **Run the analysis:**
@@ -34,6 +56,33 @@ docker run -v $(pwd)/input:/app/input \
            document-intelligence
 ```
 
+### Example Input File Location
+
+Your JSON input file should be placed at: `input/input.json`
+
+Example content:
+```json
+{
+  "challenge_info": {
+    "challenge_id": "round_1b_003",
+    "test_case_name": "create_manageable_forms",
+    "description": "Creating manageable forms"
+  },
+  "documents": [
+    {
+      "filename": "Learn Acrobat - Fill and Sign.pdf",
+      "title": "Learn Acrobat - Fill and Sign"
+    }
+  ],
+  "persona": {
+    "role": "HR professional"
+  },
+  "job_to_be_done": {
+    "task": "Create and manage fillable forms for onboarding and compliance."
+  }
+}
+```
+
 ### Local Installation
 
 1. **Install dependencies:**
@@ -41,8 +90,11 @@ docker run -v $(pwd)/input:/app/input \
 pip install -r requirements.txt
 ```
 
-2. **Run the system:**
+2. **Prepare directories and run:**
 ```bash
+mkdir -p input pdfs output
+# Add your input.json to input/ directory
+# Add your PDF files to pdfs/ directory
 python main.py input.json --pdf-dir pdfs --output output.json
 ```
 
